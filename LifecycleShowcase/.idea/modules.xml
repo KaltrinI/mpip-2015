@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/LifecycleShowcase.iml" filepath="$PROJECT_DIR$/LifecycleShowcase.iml" />
+      <module fileurl="file://$PROJECT_DIR$/LifecycleShowcase/LifecycleShowcase-LifecycleShowcase.iml" filepath="$PROJECT_DIR$/LifecycleShowcase/LifecycleShowcase-LifecycleShowcase.iml" />
+    </modules>
+  </component>
+</project>
