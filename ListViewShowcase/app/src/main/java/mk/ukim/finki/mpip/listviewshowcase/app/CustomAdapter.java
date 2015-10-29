@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +18,11 @@ import java.util.List;
  */
 public class CustomAdapter extends BaseAdapter {
 
-  private List<Person> persons;
+  private List<Person> visiblePersons;
+  private List<Person> allPersons;
+  private String queryText;
   private Context ctx;
+  private Picasso imageLoader;
 
   private LayoutInflater inflater;
 
@@ -28,25 +32,54 @@ public class CustomAdapter extends BaseAdapter {
       (LayoutInflater)
         ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     if (data != null) {
-      persons = data;
+      visiblePersons = allPersons = data;
     } else {
-      persons = new ArrayList<Person>();
+      visiblePersons = allPersons = new ArrayList<Person>();
     }
+    imageLoader = Picasso.with(ctx);
   }
 
   public void add(Person person) {
-    persons.add(person);
+    allPersons.add(person);
+    search(queryText);
     notifyDataSetChanged();
+  }
+
+  public void delete(int position) {
+    if (position < visiblePersons.size() && position >= 0) {
+      allPersons.remove(position);
+      search(queryText);
+      notifyDataSetChanged();
+    }
+  }
+
+  public void search(String text) {
+    this.queryText = text;
+    if (text != null) {
+      text = text.toLowerCase();
+      visiblePersons = new ArrayList<Person>();
+      for (Person p : allPersons) {
+        if (p.name.toLowerCase().contains(text)
+          || p.lastName.toLowerCase().contains(text)) {
+          visiblePersons.add(p);
+        }
+      }
+    } else {
+      visiblePersons = allPersons;
+    }
+    notifyDataSetChanged();
+
+
   }
 
   @Override
   public int getCount() {
-    return persons.size();
+    return visiblePersons.size();
   }
 
   @Override
   public Object getItem(int position) {
-    return persons.get(position);
+    return visiblePersons.get(position);
   }
 
   @Override
@@ -133,6 +166,10 @@ public class CustomAdapter extends BaseAdapter {
 
 
     Person person = (Person) getItem(position);
+    imageLoader.load(person.imageUrl).
+      placeholder(R.drawable.camera)
+      .error(R.drawable.mail)
+      .into(holder.picture);
     holder.name.setText(person.name);
     holder.lastName.setText(person.lastName);
     holder.visits.setText("" + person.visits);

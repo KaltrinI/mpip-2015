@@ -13,4 +13,8 @@ public class Person {
 
   public int visits;
 
+  @Override
+  public String toString() {
+    return name + " " + lastName;
+  }
 }

@@ -1,21 +1,27 @@
 package mk.ukim.finki.mpip.listviewshowcase.app;
 
-import android.app.Activity;
+import android.app.FragmentManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.SearchView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends ActionBarActivity {
 
-  EditText newItemText;
   ListView itemsList;
   ArrayAdapter<String> adapter;
+  SearchView searchView;
 
   List<Person> persons = new ArrayList<Person>();
 
@@ -31,8 +37,37 @@ public class MainActivity extends Activity {
     doInject();
   }
 
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.menu_main, menu);
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+      MenuItem searchItem = menu.findItem(R.id.action_search);
+      searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+      searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+        @Override
+        public boolean onClose() {
+          customAdapter.search(null);
+          return false;
+        }
+      });
+      searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        @Override
+        public boolean onQueryTextSubmit(String s) {
+          customAdapter.search(s);
+          return false;
+        }
+
+        @Override
+        public boolean onQueryTextChange(String s) {
+          customAdapter.search(s);
+          return true;
+        }
+      });
+    }
+    return true;
+  }
+
   private void doInject() {
-    newItemText = (EditText) findViewById(R.id.item_value);
     itemsList = (ListView) findViewById(R.id.items_list);
 
     adapter = new ArrayAdapter<String>(
@@ -40,28 +75,29 @@ public class MainActivity extends Activity {
       android.R.layout.simple_list_item_1,
       items);
 
+    final FragmentManager fragmentManager = getFragmentManager();
+
     customAdapter = new CustomAdapter(this, persons);
     itemsList.setAdapter(customAdapter);
+    itemsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+      @Override
+      public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+
+        fragmentManager.beginTransaction()
+          .replace(R.id.add_item,
+            PersonFragment.create(customAdapter, (Person) customAdapter.getItem(position), position))
+          .commit();
+
+      }
+    });
+
+
+    PersonFragment personFragment = PersonFragment.create(customAdapter, null, null);
+    fragmentManager
+      .beginTransaction()
+      .add(R.id.add_item, personFragment)
+      .commit();
   }
-
-  public void addItem(View view) {
-    String itemText = newItemText.getText().toString();
-//    items.add(itemText);
-//    newItemText.setText("");
-//    adapter.notifyDataSetChanged();
-    System.out.println("adding: " + itemText);
-
-    for (int i = 0; i < 1000; i++) {
-      Person p = new Person();
-      p.name = itemText + " " + i;
-      p.lastName = itemText + " " + i;
-      p.visits = 0;
-
-      customAdapter.add(p);
-    }
-
-  }
-
 
 }
 
