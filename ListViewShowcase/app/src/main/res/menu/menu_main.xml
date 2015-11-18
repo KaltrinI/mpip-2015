@@ -7,4 +7,23 @@
           app:showAsAction="always"
           android:icon="@android:drawable/ic_menu_search"
           app:actionViewClass="android.support.v7.widget.SearchView"></item>
+
+    <item android:id="@+id/action_load"
+          android:title="@string/reload"
+          app:showAsAction="collapseActionView"
+          android:icon="@android:drawable/ic_menu_revert"></item>
+
+    <item android:id="@+id/activate_deactivate_reload"
+          android:title="@string/activate_deactivate_reload"
+          app:showAsAction="collapseActionView"
+          android:icon="@android:drawable/ic_menu_revert"></item>
+    <item android:id="@+id/reload_10"
+          android:title="@string/reload_10"
+          app:showAsAction="collapseActionView"
+          android:icon="@android:drawable/ic_menu_revert"></item>
+    <item android:id="@+id/reload_30"
+          android:title="@string/reload_30"
+          app:showAsAction="collapseActionView"
+          android:icon="@android:drawable/ic_menu_revert"/>
+
 </menu>

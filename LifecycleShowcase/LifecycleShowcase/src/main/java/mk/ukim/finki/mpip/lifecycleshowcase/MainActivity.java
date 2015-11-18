@@ -100,6 +100,12 @@ public class MainActivity extends Activity {
   }
 
   @Override
+  protected void onRestoreInstanceState(Bundle savedInstanceState) {
+    super.onRestoreInstanceState(savedInstanceState);
+    Toast.makeText(this, "" + savedInstanceState.getBoolean("povikan"), Toast.LENGTH_LONG).show();
+  }
+
+  @Override
   protected void onRestart() {
     super.onRestart();
     Log.e(TAG, "onRestart invoked");
@@ -133,6 +139,14 @@ public class MainActivity extends Activity {
   protected void onDestroy() {
     super.onDestroy();
     Log.e(TAG, "onDestroy invoked");
+  }
+
+
+  @Override
+  protected void onSaveInstanceState(Bundle outState) {
+    outState.putBoolean("povikan", true);
+    super.onSaveInstanceState(outState);
+    Toast.makeText(this, "save instance state", Toast.LENGTH_LONG).show();
   }
 
   public void startActivityB(View view) {

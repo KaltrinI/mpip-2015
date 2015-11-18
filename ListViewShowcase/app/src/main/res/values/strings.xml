@@ -14,4 +14,9 @@
     <string name="enter_last_name">Enter last name</string>
     <string name="delete_item">Delete item</string>
     <string name="clear_item">Clear</string>
+    <string name="reload">Reloda</string>
+    <string name="no_internet_connection">No intenret connection</string>
+    <string name="activate_deactivate_reload">Activate/Deactivate</string>
+    <string name="reload_10">Reload on 10 sec</string>
+    <string name="reload_30">reload on 30 sec</string>
 </resources>

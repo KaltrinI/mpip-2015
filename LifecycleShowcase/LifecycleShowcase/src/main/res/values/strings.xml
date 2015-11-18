@@ -6,4 +6,14 @@
     <string name="hello_from">Здраво од</string>
     <string name="start_activity_b">Start Activity B</string>
     <string name="enter_phone">vnesete telefonski broj</string>
+    <string name="quantityOfGeese">You caught %d geese!</string>
+    <plurals name="quantityOfGeese">
+        <item quantity="one">You caught a goose!</item>
+        <item quantity="other">You caught %d geese!</item>
+    </plurals>
+    <string-array name="exam_array">
+        <item>q1</item>
+        <item>q2</item>
+        <item>q3</item>
+    </string-array>
 </resources>

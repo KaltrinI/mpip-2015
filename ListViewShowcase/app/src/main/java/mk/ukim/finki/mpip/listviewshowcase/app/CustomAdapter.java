@@ -177,6 +177,12 @@ public class CustomAdapter extends BaseAdapter {
     return convertView;
   }
 
+  public void clear() {
+    allPersons.clear();
+    search(queryText);
+    notifyDataSetChanged();
+  }
+
   static class Holder {
     RelativeLayout layout;
     ImageView picture;
