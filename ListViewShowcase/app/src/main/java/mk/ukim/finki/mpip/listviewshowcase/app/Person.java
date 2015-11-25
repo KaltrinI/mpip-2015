@@ -8,6 +8,8 @@ import android.os.Parcelable;
  */
 public class Person implements Parcelable {
 
+  public Long id;
+
   public String name;
 
   public String lastName;

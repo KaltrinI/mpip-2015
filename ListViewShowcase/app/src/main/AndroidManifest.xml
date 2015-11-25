@@ -21,7 +21,7 @@
         </activity>
 
         <service
-            android:name=".DownloadPersonsService"
+            android:name=".services.DownloadPersonsService"
             android:enabled="true"
             android:exported="true">
         </service>
