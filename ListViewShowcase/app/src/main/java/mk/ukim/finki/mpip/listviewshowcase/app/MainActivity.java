@@ -64,6 +64,8 @@ public class MainActivity extends ActionBarActivity {
 
     customAdapter = new CustomAdapter(this, persons);
     itemsList.setAdapter(customAdapter);
+
+
     itemsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
       @Override
       public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
@@ -75,6 +77,8 @@ public class MainActivity extends ActionBarActivity {
 
       }
     });
+
+    loadPersons();
 
 
     searchItemListener = new SearchItemListener(this, customAdapter);
@@ -102,13 +106,19 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-      PersonDataAccessObject personDao = new PersonDataAccessObject(MainActivity.this);
-      List<Person> persons = personDao.getAllItems();
-      customAdapter.clear();
-      for (Person p : persons) {
-        customAdapter.add(p);
-      }
+      loadPersons();
     }
+  }
+
+  private void loadPersons() {
+    PersonDataAccessObject personDao = new PersonDataAccessObject(MainActivity.this);
+    personDao.open();
+    List<Person> persons = personDao.getAllItems();
+    customAdapter.clear();
+    for (Person p : persons) {
+      customAdapter.add(p);
+    }
+    personDao.close();
   }
 
   private PersonsReceiver receiver;

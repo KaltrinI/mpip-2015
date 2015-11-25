@@ -71,6 +71,9 @@ public class ReloadPersonsTask extends AsyncTask<Void, Void, Person[]> {
   @Override
   protected void onPostExecute(Person[] persons) {
     super.onPostExecute(persons);
+    if (listener != null) {
+      listener.onResult(persons);
+    }
 
   }
 
