@@ -19,4 +19,5 @@
     <string name="activate_deactivate_reload">Activate/Deactivate</string>
     <string name="reload_10">Reload on 10 sec</string>
     <string name="reload_30">reload on 30 sec</string>
+    <string name="title_activity_map">MapActivity</string>
 </resources>
